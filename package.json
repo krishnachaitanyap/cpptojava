@@ -1,0 +1,85 @@
+{
+  "name": "cpp-to-java-migrator",
+  "version": "1.0.0",
+  "description": "Intelligent CLI for migrating C++ monoliths to Java Spring Boot microservices using AI-powered code analysis and transformation",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "cpp2java": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts",
+    "analyze": "node dist/index.js analyze",
+    "search": "node dist/index.js search",
+    "transform": "node dist/index.js transform",
+    "deploy": "node dist/index.js deploy",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "cpp",
+    "java",
+    "spring-boot",
+    "microservices",
+    "migration",
+    "ai",
+    "openai",
+    "pinecone",
+    "cli",
+    "code-generation",
+    "vector-search",
+    "semantic-analysis"
+  ],
+  "author": "C++ to Java Migration CLI Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/cpp-to-java-migrator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/cpp-to-java-migrator/issues"
+  },
+  "homepage": "https://github.com/yourusername/cpp-to-java-migrator#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "@pinecone-database/pinecone": "^6.1.1",
+    "axios": "^1.6.2",
+    "boxen": "^7.1.1",
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "figlet": "^1.7.0",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.10",
+    "inquirer": "^9.2.12",
+    "openai": "^4.20.1",
+    "ora": "^7.0.1",
+    "progress": "^2.0.3",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.8",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.0",
+    "@types/progress": "^2.0.7",
+    "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "^8.54.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.0",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.2"
+  }
+}
