@@ -1,12 +1,13 @@
 # 🚀 C++ to Java Spring Boot Migration CLI
 
-An intelligent CLI tool that automatically migrates legacy C++ monolith codebases into modern Java Spring Boot microservices using **AI-powered agentic architecture planning** and intelligent code transformation.
+An intelligent CLI tool that automatically migrates legacy C++ monolith codebases into modern Java Spring Boot microservices and React UI components using **AI-powered agentic architecture planning** and intelligent code transformation.
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Agentic Planning System](#agentic-planning-system)
+- [UI Migration](#ui-migration)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Installation](#installation)
@@ -20,14 +21,15 @@ An intelligent CLI tool that automatically migrates legacy C++ monolith codebase
 
 ## 🎯 Overview
 
-This CLI tool provides an **end-to-end intelligent solution** for migrating C++ applications to Java Spring Boot microservices:
+This CLI tool provides an **end-to-end intelligent solution** for migrating C++ applications to Java Spring Boot microservices and React UI components:
 
 1. **🤖 Agentic Analysis** - AI-powered C++ code analysis with intelligent architecture planning
 2. **🔍 Semantic Search** - Vector-based search through indexed code using natural language
 3. **🏗️ Smart Transformation** - Context-aware conversion with optimal Spring Boot architecture
-4. **🚀 Deployment Ready** - Complete infrastructure and deployment configurations
+4. **🎨 UI Migration** - Intelligent C++ UI to React component migration
+5. **🚀 Deployment Ready** - Complete infrastructure and deployment configurations
 
-The tool leverages **OpenAI for intelligent planning** and **Pinecone for vector storage** to understand code relationships and generate architecturally sound Java equivalents.
+The tool leverages **OpenAI for intelligent planning** and **Pinecone for vector storage** to understand code relationships and generate architecturally sound Java and React equivalents.
 
 ## 🏗️ Architecture
 
@@ -257,6 +259,253 @@ The AI agent analyzes C++ patterns and makes architectural decisions:
 - **Property Encryption**: Secure configuration management
 - **Validation**: Configuration validation and error handling
 
+## 🎨 UI Migration
+
+The CLI now supports **intelligent C++ UI to React migration** with agentic planning:
+
+### 🧠 UI Architecture Planning
+
+The AI analyzes C++ UI patterns and determines optimal React architecture:
+
+```json
+{
+  "uiFramework": "react",
+  "styling": "tailwind",
+  "stateManagement": "redux",
+  "routing": "react-router",
+  "testing": "jest",
+  "buildTool": "vite",
+  "deployment": "vercel",
+  "reason": "C++ code shows complex form patterns and state management needs"
+}
+```
+
+### 🎯 UI Component Mapping
+
+#### C++ UI Patterns → React Components
+- **Forms & Dialogs** → React Form Components
+- **Tables & Lists** → React Data Display Components
+- **Navigation & Menus** → React Router & Navigation
+- **Charts & Graphs** → React Chart Libraries
+- **Modals & Popups** → React Modal Components
+- **Custom Widgets** → React Custom Components
+
+#### Styling Intelligence
+- **CSS/SCSS** - Traditional styling approach
+- **Styled Components** - CSS-in-JS for component-based styling
+- **Tailwind CSS** - Utility-first CSS framework
+- **Material-UI** - Google Material Design components
+- **Ant Design** - Enterprise UI design system
+
+#### State Management
+- **Context API** - Simple state management
+- **Redux Toolkit** - Complex state management
+- **Zustand** - Lightweight state management
+- **Recoil** - Facebook's experimental state management
+
+#### Build & Deployment
+- **Vite** - Fast build tool and dev server
+- **Webpack** - Traditional bundler
+- **Next.js** - Full-stack React framework
+- **Vercel/Netlify** - Static site hosting
+- **Docker** - Containerized deployment
+
+### 🚀 UI Migration Commands
+
+```bash
+# Basic React app generation
+cpp2java ui my-react-app
+
+# Advanced configuration
+cpp2java ui my-react-app \
+  --framework nextjs \
+  --styling tailwind \
+  --state-management redux \
+  --routing next-router \
+  --testing cypress \
+  --build-tool nextjs \
+  --deployment vercel
+
+# Custom output directory
+cpp2java ui my-react-app -o ./frontend
+```
+
+### 📁 Generated React Structure
+
+```
+my-react-app/
+├── src/
+│   ├── components/
+│   │   ├── ui/           # Reusable UI components
+│   │   │   ├── forms/        # Form components
+│   │   │   ├── layout/       # Layout components
+│   │   │   ├── charts/       # Chart components
+│   │   │   └── modals/       # Modal components
+│   │   ├── pages/            # Page components
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── utils/            # Utility functions
+│   │   ├── types/            # TypeScript types
+│   │   ├── styles/           # Styling files
+│   │   ├── services/         # API services
+│   │   ├── context/          # React context
+│   │   └── store/            # State management (Redux)
+│   ├── public/               # Static assets
+│   ├── __tests__/            # Test files
+│   ├── package.json          # Dependencies and scripts
+│   ├── tsconfig.json         # TypeScript configuration
+│   ├── vite.config.ts        # Build tool configuration
+│   └── vercel.json           # Deployment configuration
+```
+
+### 🎯 Real-World UI Migration Examples
+
+#### Banking Application UI
+```bash
+cpp2java ui banking-ui --styling material-ui --state-management redux
+```
+
+**Generated Features:**
+- **Forms**: Account creation, transaction forms, loan applications
+- **Tables**: Transaction history, account balances, user management
+- **Charts**: Financial analytics, spending patterns, portfolio performance
+- **Modals**: Confirmation dialogs, error messages, success notifications
+- **Navigation**: Multi-level menu system with role-based access
+- **State**: Complex financial data management with Redux
+- **Styling**: Material-UI for professional banking interface
+
+#### E-commerce Dashboard UI
+```bash
+cpp2java ui ecommerce-ui --styling tailwind --state-management zustand
+```
+
+**Generated Features:**
+- **Product Management**: Product forms, inventory tables, category management
+- **Order Processing**: Order forms, status tracking, fulfillment workflows
+- **Analytics**: Sales charts, customer insights, performance metrics
+- **User Management**: Customer profiles, admin panels, role management
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **State**: Lightweight state management with Zustand
+
+#### IoT Control Panel UI
+```bash
+cpp2java ui iot-dashboard --styling styled-components --state-management context
+```
+
+**Generated Features:**
+- **Device Management**: Device registration, status monitoring, configuration
+- **Real-time Data**: Live sensor data, alerts, notifications
+- **Charts**: Time-series data visualization, performance metrics
+- **Maps**: Device location mapping, coverage areas
+- **Responsive**: Mobile and desktop optimized interfaces
+- **State**: Simple state management with React Context
+
+### Example 3: IoT Data Processing
+
+```bash
+# Analyze C++ IoT application
+cpp2java analyze -g https://github.com/owner/iot-cpp-app
+
+# AI Agent detects:
+# - MongoDB (time-series sensor data)
+# - Message queues (device communication)
+# - Circuit breakers (device connectivity)
+# - Caching (device state)
+# - Security (device authentication)
+# - Monitoring (real-time metrics)
+
+# Transform with specialized architecture
+cpp2java transform DeviceService
+cpp2java transform DataProcessingService
+```
+
+### Example 4: UI Migration - Banking Dashboard
+
+```bash
+# Analyze C++ banking application with UI
+cpp2java analyze -g https://github.com/owner/banking-cpp-app
+
+# AI Agent detects UI patterns:
+# - Complex forms (account creation, transactions)
+# - Data tables (transaction history, balances)
+# - Charts (financial analytics)
+# - Navigation menus (multi-level banking interface)
+# - Modal dialogs (confirmations, errors)
+
+# Generate React UI with intelligent architecture
+cpp2java ui banking-dashboard \
+  --styling material-ui \
+  --state-management redux \
+  --routing react-router \
+  --testing jest \
+  --build-tool vite \
+  --deployment vercel
+
+# AI Agent generates:
+# - Material-UI components for professional banking interface
+# - Redux store for complex financial state management
+# - React Router for multi-page navigation
+# - Form components with validation
+# - Data table components with sorting/filtering
+# - Chart components for financial analytics
+# - Modal components for confirmations
+# - Responsive design for mobile/desktop
+```
+
+### Example 5: UI Migration - E-commerce Admin Panel
+
+```bash
+# Analyze C++ e-commerce application
+cpp2java analyze --workspace ./ecommerce-cpp-app
+
+# Generate React admin panel
+cpp2java ui ecommerce-admin \
+  --framework nextjs \
+  --styling tailwind \
+  --state-management zustand \
+  --routing next-router \
+  --testing cypress \
+  --build-tool nextjs \
+  --deployment netlify
+
+# AI Agent generates:
+# - Next.js for SEO and performance
+# - Tailwind CSS for rapid UI development
+# - Zustand for lightweight state management
+# - Product management forms and tables
+# - Order processing workflows
+# - Inventory management interfaces
+# - Sales analytics dashboards
+# - User management panels
+# - Responsive admin interface
+```
+
+### Example 6: UI Migration - IoT Control Panel
+
+```bash
+# Analyze C++ IoT application
+cpp2java analyze -g https://github.com/owner/iot-cpp-app
+
+# Generate React IoT dashboard
+cpp2java ui iot-control-panel \
+  --styling styled-components \
+  --state-management context \
+  --routing react-router \
+  --testing jest \
+  --build-tool vite \
+  --deployment docker
+
+# AI Agent generates:
+# - Styled Components for component-based styling
+# - React Context for simple state management
+# - Real-time device monitoring components
+# - Sensor data visualization charts
+# - Device configuration forms
+# - Alert and notification components
+# - Map components for device locations
+# - Mobile-responsive interface
+# - Docker deployment configuration
+```
+
 ## 📦 Installation
 
 ### Prerequisites
@@ -389,25 +638,6 @@ cpp2java transform OrderService
 cpp2java transform PaymentService
 ```
 
-### Example 3: IoT Data Processing
-
-```bash
-# Analyze C++ IoT application
-cpp2java analyze -g https://github.com/owner/iot-cpp-app
-
-# AI Agent detects:
-# - MongoDB (time-series sensor data)
-# - Message queues (device communication)
-# - Circuit breakers (device connectivity)
-# - Caching (device state)
-# - Security (device authentication)
-# - Monitoring (real-time metrics)
-
-# Transform with specialized architecture
-cpp2java transform DeviceService
-cpp2java transform DataProcessingService
-```
-
 ## 🔧 API Reference
 
 ### Analyze Command
@@ -448,6 +678,22 @@ cpp2java deploy <service> [options]
 **Options:**
 - `--platform <platform>` - Deployment platform (docker, aws, gcp)
 - `--environment <env>` - Environment (dev, staging, prod)
+
+### UI Command
+```bash
+cpp2java ui <app-name> [options]
+```
+
+**Options:**
+- `-o, --output <path>` - Output directory for React app (default: ./migrated-ui)
+- `-f, --framework <framework>` - React framework (react, nextjs, gatsby) (default: react)
+- `-s, --styling <styling>` - Styling approach (css, scss, styled-components, tailwind, material-ui, antd) (default: css)
+- `-m, --state-management <state>` - State management (context, redux, zustand, recoil, none) (default: context)
+- `-r, --routing <routing>` - Routing (react-router, next-router, none) (default: react-router)
+- `-t, --testing <testing>` - Testing framework (jest, cypress, playwright, none) (default: jest)
+- `-b, --build-tool <tool>` - Build tool (vite, webpack, create-react-app, nextjs) (default: vite)
+- `-d, --deployment <deployment>` - Deployment platform (vercel, netlify, aws, docker) (default: vercel)
+- `-v, --verbose` - Enable verbose logging
 
 ## 🏗️ Generated Project Structure
 

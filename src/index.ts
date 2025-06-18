@@ -10,6 +10,7 @@ import { AnalyzeCommand } from './commands/AnalyzeCommand.js';
 import { SearchCommand } from './commands/SearchCommand.js';
 import { TransformCommand } from './commands/TransformCommand.js';
 import { DeployCommand } from './commands/DeployCommand.js';
+import { UICommand } from './commands/UICommand.js';
 import { ConfigManager } from './config/ConfigManager.js';
 
 // Load environment variables
@@ -42,6 +43,7 @@ console.log(
   chalk.white('\n  cpp2java analyze -g https://github.com/owner/cpp-monolith'),
   chalk.white('\n  cpp2java analyze -g https://github.com/owner/repo -b develop'),
   chalk.white('\n  cpp2java analyze --keep-clone'),
+  chalk.white('\n  cpp2java ui my-react-app -s tailwind -m redux'),
   chalk.white('\n')
 );
 
@@ -58,6 +60,7 @@ new AnalyzeCommand(program, statusBar, configManager);
 new SearchCommand(program, statusBar, configManager);
 new TransformCommand(program, statusBar, configManager);
 new DeployCommand(program, statusBar, configManager);
+new UICommand();
 
 // Global options
 program
