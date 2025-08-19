@@ -220,6 +220,48 @@ public class LogAgentCLI {
         return cmdArgs;
     }
 
+     private List<String> generateRecommendations(List<LogStatement> logs, LogQualityMetrics metrics) {
+        List<String> recommendations = new ArrayList<>();
+        
+        if (metrics.getSensitiveDataLogs() > 0) {
+            recommendations.add("🔴 CRITICAL: Remove " + metrics.getSensitiveDataLogs() + " logs containing sensitive data");
+        }
+        
+        if (metrics.getHighFrequencyLogs() > 0) {
+            recommendations.add("🟠 HIGH: Optimize " + metrics.getHighFrequencyLogs() + " high-frequency logs");
+        }
+        
+        if (metrics.getIncorrectLevelLogs() > 0) {
+            recommendations.add("🟠 HIGH: Fix " + metrics.getIncorrectLevelLogs() + " incorrect log levels");
+        }
+        
+        if (metrics.getMissingLogs() > 0) {
+            recommendations.add("🟠 HIGH: Add error logging in " + metrics.getMissingLogs() + " catch blocks");
+        }
+        
+        if (metrics.getHighCostLogs() > 0) {
+            recommendations.add("🟡 MEDIUM: Reduce size of " + metrics.getHighCostLogs() + " high-cost logs");
+        }
+        
+        if (metrics.getUnstructuredLogs() > 0) {
+            recommendations.add("🟡 MEDIUM: Convert " + metrics.getUnstructuredLogs() + " logs to structured format");
+        }
+        
+        if (metrics.getRedundantLogs() > 0) {
+            recommendations.add("🟢 LOW: Remove redundancy from " + metrics.getRedundantLogs() + " logs");
+        }
+        
+        if (metrics.getOverallScore() < 70) {
+            recommendations.add("📊 Overall: Focus on high and critical issues first to improve quality score");
+        }
+        
+        if (recommendations.isEmpty()) {
+            recommendations.add("🎉 Excellent! Your logging practices are already following best practices");
+        }
+        
+        return recommendations;
+    }
+
     private static class CommandLineArgs {
         String repoPath;
         String outputPath;
