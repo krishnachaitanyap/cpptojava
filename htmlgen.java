@@ -139,6 +139,32 @@ public class HTMLReportGenerator {
             .insight-high { background: #fd7e14; color: white; }
             .insight-medium { background: #ffc107; color: #333; }
             .insight-low { background: #28a745; color: white; }
+            
+            /* Filter Controls */
+            .filter-controls { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0; 
+                              padding: 20px; background: #f8f9fa; border-radius: 8px; }
+            .filter-group { display: flex; flex-direction: column; gap: 5px; }
+            .filter-group label { font-weight: 600; color: #495057; font-size: 0.9em; }
+            .filter-group select, .filter-group input { padding: 8px 12px; border: 1px solid #ced4da; 
+                                                      border-radius: 4px; font-size: 0.9em; }
+            .filter-group select:focus, .filter-group input:focus { outline: none; 
+                                                                  border-color: #667eea; box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2); }
+            .clear-filters-btn { padding: 8px 16px; background: #6c757d; color: white; 
+                                border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em; }
+            .clear-filters-btn:hover { background: #5a6268; }
+            
+            /* Results Summary */
+            .results-summary { margin: 15px 0; padding: 10px 15px; background: #e3f2fd; 
+                              border-radius: 4px; color: #1976d2; font-weight: 500; }
+            
+            /* Severity Badges */
+            .severity-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; 
+                             font-size: 0.8em; font-weight: bold; text-transform: uppercase; }
+            .severity-critical { background: #dc3545; color: white; }
+            .severity-high { background: #fd7e14; color: white; }
+            .severity-medium { background: #ffc107; color: #333; }
+            .severity-low { background: #28a745; color: white; }
+            .severity-none { background: #6c757d; color: white; }
             .recommendation { background: #e3f2fd; padding: 15px; border-radius: 8px; 
                              margin: 10px 0; border-left: 4px solid #2196f3; }
             .footer { text-align: center; padding: 30px; color: #666; border-top: 1px solid #ecf0f1; }
@@ -330,7 +356,7 @@ public class HTMLReportGenerator {
     }
 
     /**
-     * Generate detailed logs section
+     * Generate detailed logs section with filterable table
      */
     private String generateDetailedLogsSection(AnalysisResult result) {
         List<LogStatement> logs = result.getLogs();
@@ -346,53 +372,138 @@ public class HTMLReportGenerator {
                 """;
         }
         
+        // Generate filterable table with all logs
         StringBuilder tableRows = new StringBuilder();
-        logs.stream()
-            .sorted((a, b) -> Double.compare(b.getQualityScore(), a.getQualityScore()))
-            .limit(50) // Show top 50 logs
-            .forEach(log -> {
-                String levelClass = "log-level " + log.getLevel().toString().toLowerCase();
-                String insightsHtml = generateInsightsHtml(log.getInsights());
-                
-                tableRows.append(String.format("""
-                    <tr>
-                        <td><span class="%s">%s</span></td>
-                        <td>%s</td>
-                        <td>%s</td>
-                        <td>%s</td>
-                        <td>%.1f</td>
-                        <td>%s</td>
-                    </tr>
-                    """, levelClass, log.getLevel().toString().toUpperCase(),
-                         log.getFileName(), log.getContext(), 
-                         truncateMessage(log.getMessage(), 50), 
-                         log.getQualityScore(), insightsHtml));
-            });
+        logs.forEach(log -> {
+            String levelClass = "log-level " + log.getLevel().toString().toLowerCase();
+            String insightsHtml = generateInsightsHtml(log.getInsights());
+            String issueTypes = extractIssueTypes(log.getInsights());
+            String severity = extractHighestSeverity(log.getInsights());
+            
+            tableRows.append(String.format("""
+                <tr data-issue-type="%s" data-severity="%s">
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td><span class="%s">%s</span></td>
+                    <td>%d</td>
+                    <td>%s</td>
+                    <td><span class="severity-badge %s">%s</span></td>
+                </tr>
+                """, issueTypes, severity.toLowerCase(),
+                     log.getFileName(), log.getShortFilePath(),
+                     levelClass, log.getLevel().toString().toUpperCase(),
+                     log.getLineNumber(),
+                     issueTypes.isEmpty() ? "No Issues" : issueTypes,
+                     "severity-" + severity.toLowerCase(), severity));
+        });
         
         return String.format("""
             <div class="container">
                 <div class="section">
                     <h2>📝 Detailed Log Analysis</h2>
-                    <p>Showing top 50 logs by quality score. Total logs: %d</p>
+                    <p>Total logs analyzed: %d. Use filters below to focus on specific issues.</p>
                     
-                    <table class="log-table">
+                    <!-- Filter Controls -->
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label for="issueTypeFilter">Filter by Issue Type:</label>
+                            <select id="issueTypeFilter" onchange="filterTable()">
+                                <option value="">All Issue Types</option>
+                                <option value="redundancy">Redundancy</option>
+                                <option value="incorrect_level">Incorrect Level</option>
+                                <option value="high_frequency">High Frequency</option>
+                                <option value="missing_log">Missing Log</option>
+                                <option value="unstructured">Unstructured</option>
+                                <option value="sensitive_data">Sensitive Data</option>
+                                <option value="high_cost">High Cost</option>
+                                <option value="exception_handling">Exception Handling</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="severityFilter">Filter by Severity:</label>
+                            <select id="severityFilter" onchange="filterTable()">
+                                <option value="">All Severities</option>
+                                <option value="critical">Critical</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="searchFilter">Search:</label>
+                            <input type="text" id="searchFilter" placeholder="Search logs..." onkeyup="filterTable()">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <button onclick="clearFilters()" class="clear-filters-btn">Clear Filters</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Summary -->
+                    <div class="results-summary">
+                        <span id="visibleCount">%d</span> of %d logs visible
+                    </div>
+                    
+                    <table class="log-table" id="logsTable">
                         <thead>
                             <tr>
-                                <th>Level</th>
-                                <th>File</th>
-                                <th>Context</th>
-                                <th>Message</th>
-                                <th>Score</th>
-                                <th>Insights</th>
+                                <th>Filename</th>
+                                <th>Location</th>
+                                <th>Log Level</th>
+                                <th>Line Number</th>
+                                <th>Issue Type</th>
+                                <th>Severity</th>
                             </tr>
                         </thead>
                         <tbody>
                             %s
                         </tbody>
                     </table>
+                    
+                    <!-- JavaScript for filtering -->
+                    <script>
+                        function filterTable() {
+                            const issueTypeFilter = document.getElementById('issueTypeFilter').value.toLowerCase();
+                            const severityFilter = document.getElementById('severityFilter').value.toLowerCase();
+                            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+                            
+                            const table = document.getElementById('logsTable');
+                            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+                            let visibleCount = 0;
+                            
+                            for (let i = 0; i < rows.length; i++) {
+                                const row = rows[i];
+                                const issueType = row.getAttribute('data-issue-type').toLowerCase();
+                                const severity = row.getAttribute('data-severity').toLowerCase();
+                                const text = row.textContent.toLowerCase();
+                                
+                                const matchesIssueType = !issueTypeFilter || issueType.includes(issueTypeFilter);
+                                const matchesSeverity = !severityFilter || severity === severityFilter;
+                                const matchesSearch = !searchFilter || text.includes(searchFilter);
+                                
+                                if (matchesIssueType && matchesSeverity && matchesSearch) {
+                                    row.style.display = '';
+                                    visibleCount++;
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            }
+                            
+                            document.getElementById('visibleCount').textContent = visibleCount;
+                        }
+                        
+                        function clearFilters() {
+                            document.getElementById('issueTypeFilter').value = '';
+                            document.getElementById('severityFilter').value = '';
+                            document.getElementById('searchFilter').value = '';
+                            filterTable();
+                        }
+                    </script>
                 </div>
             </div>
-            """, logs.size(), tableRows.toString());
+            """, logs.size(), logs.size(), tableRows.toString());
     }
 
     /**
@@ -476,5 +587,44 @@ public class HTMLReportGenerator {
     private String truncateMessage(String message, int maxLength) {
         if (message.length() <= maxLength) return message;
         return message.substring(0, maxLength - 3) + "...";
+    }
+    
+    /**
+     * Extract issue types from insights
+     */
+    private String extractIssueTypes(List<LogInsight> insights) {
+        if (insights == null || insights.isEmpty()) {
+            return "";
+        }
+        
+        return insights.stream()
+            .map(insight -> insight.getType().toString().toLowerCase().replace('_', ' '))
+            .distinct()
+            .collect(java.util.stream.Collectors.joining(", "));
+    }
+    
+    /**
+     * Extract highest severity from insights
+     */
+    private String extractHighestSeverity(List<LogInsight> insights) {
+        if (insights == null || insights.isEmpty()) {
+            return "NONE";
+        }
+        
+        // Define severity hierarchy
+        java.util.Map<String, Integer> severityOrder = java.util.Map.of(
+            "CRITICAL", 4,
+            "HIGH", 3,
+            "MEDIUM", 2,
+            "LOW", 1
+        );
+        
+        return insights.stream()
+            .map(insight -> insight.getSeverity().toString())
+            .max((a, b) -> Integer.compare(
+                severityOrder.getOrDefault(a, 0),
+                severityOrder.getOrDefault(b, 0)
+            ))
+            .orElse("NONE");
     }
 }
